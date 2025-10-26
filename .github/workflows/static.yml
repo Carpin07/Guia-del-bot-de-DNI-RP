@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de DNI Automatizado - Documentación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header p.subtitle {
+            color: #666;
+            font-size: 1.3em;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+        }
+
+        .badge-discord { background: #7289DA; color: white; }
+        .badge-python { background: #3776AB; color: white; }
+        .badge-license { background: #28a745; color: white; }
+
+        .features-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        nav h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        nav ul {
+            list-style: none;
+            columns: 2;
+            gap: 20px;
+        }
+
+        nav ul li {
+            margin-bottom: 10px;
+        }
+
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* Content sections */
+        .content-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .content-section h3 {
+            color: #764ba2;
+            font-size: 1.6em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section h4 {
+            color: #555;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            background: white;
+            border-bottom: 1px solid #ddd;
+            transition: background 0.3s;
+        }
+
+        tbody tr:hover {
+            background: #f8f9ff;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: #f0f2ff;
+        }
+
+        /* Code blocks */
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 25px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 5px;
+            color: #e83e8c;
+            font-size: 0.95em;
+        }
+
+        pre code {
+            background: none;
+            color: #f8f8f2;
+            padding: 0;
+        }
+
+        /* Feature cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .feature-card h3 {
+            color: white;
+            margin-top: 0;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        /* Alert boxes */
+        .alert {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #0c5460;
+            color: #0c5460;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border-color: #856404;
+            color: #856404;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border-color: #155724;
+            color: #155724;
+        }
+
+        /* Details/Summary (FAQ) */
+        details {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        details:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        details[open] {
+            background: #fff;
+            border-color: #667eea;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            padding: 10px;
+            user-select: none;
+        }
+
+        summary:hover {
+            color: #764ba2;
+        }
+
+        details p {
+            margin-top: 15px;
+            padding-left: 10px;
+            line-height: 1.8;
+        }
+
+        /* Process diagram */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .process-step::after {
+            content: '→';
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .process-step:last-child::after {
+            content: '';
+        }
+
+        /* Examples */
+        .example-box {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .example-box h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        footer h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            color: #666;
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        footer .star-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        footer .star-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+                flex-direction: column;
+            }
+
+            header p.subtitle {
+                font-size: 1em;
+            }
+
+            nav ul {
+                columns: 1;
+            }
+
+            .content-section {
+                padding: 25px;
+            }
+
+            .content-section h2 {
+                font-size: 1.8em;
+            }
+
+            .process-steps {
+                flex-direction: column;
+            }
+
+            .process-step::after {
+                content: '↓';
+                right: 50%;
+                top: auto;
+                bottom: -35px;
+                transform: translateX(50%);
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Lista numerada */
+        ol {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+
+        ol li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        /* Lista sin numerar */
+        ul {
+            margin-left: 30px;
+            margin-top: 15px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* Separador */
+        hr {
+            border: none;
+            border-top: 3px solid #e9ecef;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>📄 Sistema de DNI Automatizado</h1>
+            <p class="subtitle">Bot de Discord para gestionar Documentos Nacionales de Identidad virtuales</p>
+            
+            <div class="badges">
+                <a href="https://discord.com" class="badge badge-discord">Discord Bot</a>
+                <a href="https://python.org" class="badge badge-python">Python 3.8+</a>
+                <a href="#" class="badge badge-license">MIT License</a>
+            </div>
+
+            <div class="features-highlight">
+                ✨ 🤖 Automático • 🎨 Personalizable • 💾 Persistente • ✅ Firma Digital
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav id="tabla-contenidos">
+            <h2>📖 Tabla de Contenidos</h2>
+            <ul>
+                <li><a href="#que-es">🎯 ¿Qué es este bot?</a></li>
+                <li><a href="#comenzar">🚀 Comenzar</a></li>
+                <li><a href="#usuarios">👥 Para Usuarios</a></li>
+                <li><a href="#administradores">👑 Para Administradores</a></li>
+                <li><a href="#personalizacion">🎨 Personalización</a></li>
+                <li><a href="#faq">❓ Preguntas Frecuentes</a></li>
+                <li><a href="#ejemplos">💡 Ejemplos de Uso</a></li>
+                <li><a href="#comandos">🎯 Comandos Completos</a></li>
+            </ul>
+        </nav>
+
+        <!-- ¿Qué es este bot? -->
+        <section id="que-es" class="content-section">
+            <h2>🎯 ¿Qué es este bot?</h2>
+            <p>Este bot automatiza completamente la creación, firma y gestión de <strong>Documentos Nacionales de Identidad</strong> virtuales para servidores de Discord de roleplay.</p>
+
+            <h3>🌟 Características Destacadas</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🤖 <strong>Sistema Automático</strong></td>
+                        <td>Los usuarios escriben un mensaje y el bot genera el DNI automáticamente</td>
+                    </tr>
+                    <tr>
+                        <td>🎨 <strong>3 Países Disponibles</strong></td>
+                        <td>España 🇪🇸, México 🇲🇽, Argentina 🇦🇷</td>
+                    </tr>
+                    <tr>
+                        <td>🎭 <strong>3 Temas de Diseño</strong></td>
+                        <td>Clásico, Moderno, Oscuro</td>
+                    </tr>
+                    <tr>
+                        <td>✅ <strong>Firma Digital</strong></td>
+                        <td>Los administradores aprueban con botones interactivos</td>
+                    </tr>
+                    <tr>
+                        <td>💾 <strong>Base de Datos</strong></td>
+                        <td>Todos los DNIs se guardan permanentemente</td>
+                    </tr>
+                    <tr>
+                        <td>📱 <strong>Código QR</strong></td>
+                        <td>Cada DNI incluye un QR verificable</td>
+                    </tr>
+                    <tr>
+                        <td>📨 <strong>Notificaciones DM</strong></td>
+                        <td>El ciudadano recibe su DNI firmado por mensaje privado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Comenzar -->
+        <section id="comenzar" class="content-section">
+            <h2>🚀 Comenzar</h2>
+            <h3>Comandos Rápidos</h3>
+            <pre><code>/ayuda_dni      → Ver guía completa
+/stats_dni      → Ver estadísticas del sistema
+/crear_dni      → Crear DNI manual (solo admins)</code></pre>
+        </section>
+
+        <!-- Para Usuarios -->
+        <section id="usuarios" class="content-section">
+            <h2>👥 Para Usuarios</h2>
+            
+            <h3>📝 Solicitar DNI Automático</h3>
+            <p>El bot lee automáticamente mensajes en el canal de solicitudes. Solo copia y pega este formato:</p>
+
+            <pre><code>DNI nuevo
+Edad: 18
+Fecha de Nacimiento: 15/03/2006
+Usuario de Roblox: TuUsuario123
+País: españa
+Tema: clasico</code></pre>
+
+            <h4>📋 Campos Disponibles</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Descripción</th>
+                        <th>Obligatorio</th>
+                        <th>Valores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Edad</strong></td>
+                        <td>Tu edad</td>
+                        <td>✅</td>
+                        <td>0-150</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fecha de Nacimiento</strong></td>
+                        <td>Formato: dd/mm/yyyy</td>
+                        <td>✅</td>
+                        <td>Ej: 15/03/2006</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Usuario de Roblox</strong></td>
+                        <td>Tu nombre en Roblox</td>
+                        <td>✅</td>
+                        <td>Cualquier texto</td>
+                    </tr>
+                    <tr>
+                        <td><strong>País</strong></td>
+                        <td>País del DNI</td>
+                        <td>❌</td>
+                        <td>españa, mexico, argentina</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tema</strong></td>
+                        <td>Diseño del DNI</td>
+                        <td>❌</td>
+                        <td>clasico, moderno, oscuro</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info">
+                💡 <strong>Nota:</strong> Los campos País y Tema son opcionales. Por defecto se usa España y tema Clásico.
+            </div>
+
+            <h3>🔄 Proceso de Solicitud</h3>
+            <div class="process-steps">
+                <div class="process-step">
+                    <strong>📝</strong><br>Escribes solicitud
+                </div>
+                <div class="process-step">
+                    <strong>🤖</strong><br>Bot detecta mensaje
+                </div>
+                <div class="process-step">
+                    <strong>📄</strong><br>Genera DNI
+                </div>
+                <div class="process-step">
+                    <strong>✅</strong><br>Añade reacción
+                </div>
+                <div class="process-step">
+                    <strong>👑</strong><br>Admin firma
+                </div>
+                <div class="process-step">
+                    <strong>📨</strong><br>Recibes DNI por DM
+                </div>
+            </div>
+
+            <ol>
+                <li><strong>Escribes</strong> tu solicitud en el canal configurado</li>
+                <li><strong>El bot detecta</strong> automáticamente tu mensaje</li>
+                <li><strong>Se genera</strong> el DNI con tus datos</li>
+                <li><strong>Añade ✅</strong> a tu mensaje (procesado)</li>
+                <li><strong>Un admin firma</strong> usando los botones</li>
+                <li><strong>Recibes</strong> tu DNI firmado por mensaje privado</li>
+            </ol>
+
+            <h3>📊 Ver Estadísticas</h3>
+            <p>Usa el comando <code>/stats_dni</code> para ver:</p>
+            <ul>
+                <li>📄 <strong>Total de DNIs</strong> creados</li>
+                <li>✅ <strong>DNIs firmados</strong></li>
+                <li>⏳ <strong>DNIs pendientes</strong> de firma</li>
+                <li>🌍 <strong>Distribución por países</strong></li>
+            </ul>
+        </section>
+
+        <!-- Para Administradores -->
+        <section id="administradores" class="content-section">
+            <h2>👑 Para Administradores</h2>
+
+            <h3>🛠️ Crear DNI Manual</h3>
+            <p>Si prefieres usar un formulario interactivo:</p>
+            <pre><code>/crear_dni pais:España tema:Moderno</code></pre>
+
+            <h4>Pasos:</h4>
+            <ol>
+                <li>Ejecuta el comando</li>
+                <li>Selecciona <strong>país</strong> y <strong>tema</strong></li>
+                <li>Se abre un <strong>formulario</strong></li>
+                <li>Completa:
+                    <ul>
+                        <li>Edad</li>
+                        <li>Fecha de Nacimiento</li>
+                        <li>Usuario de Roblox</li>
+                    </ul>
+                </li>
+                <li><strong>Revisa el preview</strong></li>
+                <li><strong>Confirma</strong> o cancela</li>
+            </ol>
+
+            <h3>✅ Firmar DNI</h3>
+            <p>Cuando se genera un DNI pendiente, verás dos botones:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Botón</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>✅ <strong>Firmar y Aprobar</strong></td>
+                        <td>Aprueba el DNI y lo publica</td>
+                    </tr>
+                    <tr>
+                        <td>❌ <strong>Rechazar</strong></td>
+                        <td>Rechaza la solicitud</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Al firmar, automáticamente:</h4>
+            <ul>
+                <li>✅ Se publica en el canal de DNIs firmados</li>
+                <li>📨 Se envía por DM al ciudadano</li>
+                <li>💾 Se guarda en la base de datos</li>
+                <li>🗑️ Se elimina el mensaje pendiente</li>
+            </ul>
+
+            <h3>⚙️ Configurar Canales</h3>
+            <p>Configura dónde se leen solicitudes y dónde se publican DNIs firmados:</p>
+            <pre><code>/config_canales canal_solicitudes:#solicitudes-dni canal_firmados:#dnis-oficiales</code></pre>
+
+            <h4>Ver configuración actual:</h4>
+            <pre><code>/config_canales</code></pre>
+        </section>
+
+        <!-- Personalización -->
+        <section id="personalizacion" class="content-section">
+            <h2>🎨 Personalización</h2>
+
+            <h3>🌍 Países Disponibles</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bandera</th>
+                        <th>País</th>
+                        <th>Código</th>
+                        <th>Nacionalidad</th>
+                        <th>Colores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🇪🇸</td>
+                        <td><strong>España</strong></td>
+                        <td><code>españa</code></td>
+                        <td>Español/a</td>
+                        <td>Rojo y Amarillo</td>
+                    </tr>
+                    <tr>
+                        <td>🇲🇽</td>
+                        <td><strong>México</strong></td>
+                        <td><code>mexico</code></td>
+                        <td>Mexicano/a</td>
+                        <td>Verde, Blanco y Rojo</td>
+                    </tr>
+                    <tr>
+                        <td>🇦🇷</td>
+                        <td><strong>Argentina</strong></td>
+                        <td><code>argentina</code></td>
+                        <td>Argentino/a</td>
+                        <td>Celeste y Blanco</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🎭 Temas de Diseño</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Estilo</th>
+                        <th>Colores</th>
+                        <th>Ideal para</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Clásico</strong></td>
+                        <td>Tradicional</td>
+                        <td>Azul y blanco</td>
+                        <td>Servidores formales</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Moderno</strong></td>
+                        <td>Minimalista</td>
+                        <td>Gris claro</td>
+                        <td>Diseño contemporáneo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Oscuro</strong></td>
+                        <td>Dark Mode</td>
+                        <td>Negro y gris</td>
+                        <td>Usuarios dark mode</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>📋 Información en el DNI</h3>
+            <p>Cada DNI generado incluye:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>👤 <strong>Nombre</strong></td><td>Nombre de Discord del usuario</td></tr>
+                    <tr><td>🎂 <strong>Edad</strong></td><td>Edad especificada</td></tr>
+                    <tr><td>📅 <strong>Fecha de Nacimiento</strong></td><td>En formato dd/mm/yyyy</td></tr>
+                    <tr><td>💬 <strong>Tag de Discord</strong></td><td>Mención del usuario</td></tr>
+                    <tr><td>🆔 <strong>ID Único</strong></td><td>Formato: ESP-000001 (autoincremental)</td></tr>
+                    <tr><td>🎮 <strong>Usuario Roblox</strong></td><td>Nombre en Roblox</td></tr>
+                    <tr><td>🌍 <strong>País y Nacionalidad</strong></td><td>Según el país seleccionado</td></tr>
+                    <tr><td>📆 <strong>Fecha de Ciudadanía</strong></td><td>Fecha de creación del DNI</td></tr>
+                    <tr><td>✓ <strong>Estado</strong></td><td>Activo (siempre)</td></tr>
+                    <tr><td>📱 <strong>Código QR</strong></td><td>Información verificable escaneada</td></tr>
+                    <tr><td>🔐 <strong>Sello Oficial</strong></td><td>Verde (firmado) o Rojo (pendiente)</td></tr>
+                    <tr><td>✍️ <strong>Firma</strong></td><td>Nombre del administrador que firmó</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="content-section">
+            <h2>❓ Preguntas Frecuentes</h2>
+
+            <details>
+                <summary>¿Puedo crear mi propio DNI?</summary>
+                <p>No directamente. Solo los administradores pueden crear DNIs manualmente con <code>/crear_dni</code>. Sin embargo, <strong>puedes solicitar uno</strong> usando el sistema automático escribiendo un mensaje con el formato especificado en el canal de solicitudes.</p>
+            </details>
+
+            <details>
+                <summary>¿Los DNIs se pierden si el bot se reinicia?</summary>
+                <p><strong>No</strong>. Todos los DNIs se guardan en una base de datos JSON (<code>dnis_database.json</code>) que persiste entre reinicios del bot.</p>
+            </details>
+
+            <details>
+                <summary>¿Puedo cambiar mi DNI después de creado?</summary>
+                <p>Actualmente no hay sistema de edición. Contacta a un administrador para que cree uno nuevo con los datos correctos.</p>
+            </details>
+
+            <details>
+                <summary>¿Por qué no recibí mi DNI por mensaje privado?</summary>
+                <p>Verifica que tengas activada la opción <strong>"Permitir mensajes directos de miembros del servidor"</strong> en la configuración de Privacidad de Discord para ese servidor.</p>
+            </details>
+
+            <details>
+                <summary>¿Puedo tener DNIs de varios países?</summary>
+                <p><strong>Sí</strong>. Puedes solicitar un DNI por cada país disponible (España, México, Argentina).</p>
+            </details>
+
+            <details>
+                <summary>¿Los códigos QR funcionan?</summary>
+                <p><strong>Sí</strong>. Cada código QR contiene la información del DNI en texto plano y puede ser escaneado con cualquier lector de QR.</p>
+            </details>
+
+            <details>
+                <summary>¿Cómo sé si mi solicitud fue procesada?</summary>
+                <p>El bot añadirá automáticamente una reacción ✅ a tu mensaje de solicitud cuando la procese.</p>
+            </details>
+
+            <details>
+                <summary>¿Cuánto tarda en firmarse un DNI?</summary>
+                <p>Depende de la disponibilidad de los administradores. Una vez que un admin presione el botón de firma, el proceso es instantáneo.</p>
+            </details>
+
+            <details>
+                <summary>¿Qué pasa si escribo mal el formato?</summary>
+                <p>El bot simplemente no procesará tu mensaje. Asegúrate de:</p>
+                <ul>
+                    <li>Empezar con "DNI nuevo"</li>
+                    <li>Usar dos puntos <code>:</code> después de cada campo</li>
+                    <li>Seguir el formato exacto</li>
+                </ul>
+            </details>
+        </section>
+
+        <!-- Ejemplos -->
+        <section id="ejemplos" class="content-section">
+            <h2>💡 Ejemplos de Uso</h2>
+
+            <div class="example-box">
+                <h4>Ejemplo 1: Solicitud Básica (España)</h4>
+                <pre><code>DNI nuevo
+Edad: 25
+Fecha de Nacimiento: 10/05/1999
+Usuario de Roblox: CarlosRP2024</code></pre>
+            </div>
+
+            <div class="example-box">
+                <h4>Ejemplo 2: Solicitud Completa (México, Tema Oscuro)</h4>
+                <pre><code>DNI nuevo
+Edad: 19
+Fecha de Nacimiento: 22/11/2005
+Usuario de Roblox: MexicoPlayer99
+País: mexico
+Tema: oscuro</code></pre>
+            </div>
+
+            <div class="example-box">
+                <h4>Ejemplo 3: Argentina con Tema Moderno</h4>
+                <pre><code>DNI nuevo
+Edad: 30
+Fecha de Nacimiento: 03/07/1994
+Usuario de Roblox: ArgentinaGamer
+País: argentina
+Tema: moderno</code></pre>
+            </div>
+        </section>
+
+        <!-- Comandos -->
+        <section id="comandos" class="content-section">
+            <h2>🎯 Comandos Completos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Comando</th>
+                        <th>Quién puede usarlo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/ayuda_dni</code></td>
+                        <td>👥 Todos</td>
+                        <td>Muestra guía completa del sistema</td>
+                    </tr>
+                    <tr>
+                        <td><code>/stats_dni</code></td>
+                        <td>👥 Todos</td>
+                        <td>Ver estadísticas de DNIs</td>
+                    </tr>
+                    <tr>
+                        <td><code>/crear_dni</code></td>
+                        <td>👑 Solo Admins</td>
+                        <td>Crear DNI con formulario</td>
+                    </tr>
+                    <tr>
+                        <td><code>/config_canales</code></td>
+                        <td>👑 Solo Admins</td>
+                        <td>Configurar canales del sistema</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔔 Notificaciones</h3>
+            <h4>Para Usuarios:</h4>
+            <ul>
+                <li>📨 <strong>DM al aprobar</strong>: Recibes tu DNI firmado por mensaje privado</li>
+                <li>✅ <strong>Reacción</strong>: El bot marca tu solicitud con ✅</li>
+            </ul>
+
+            <h4>Para Administradores:</h4>
+            <ul>
+                <li>🔔 <strong>Mensaje en canal</strong>: Aparece DNI pendiente con botones</li>
+                <li>📢 <strong>Publicación automática</strong>: DNIs firmados se publican en el canal configurado</li>
+            </ul>
+
+            <h3>📊 Sistema de IDs</h3>
+            <p>Cada DNI tiene un <strong>ID único</strong> que nunca se repite:</p>
+            <ul>
+                <li>🇪🇸 España: <code>ESP-000001</code>, <code>ESP-000002</code>, ...</li>
+                <li>🇲🇽 México: <code>MEX-000001</code>, <code>MEX-000002</code>, ...</li>
+                <li>🇦🇷 Argentina: <code>ARG-000001</code>, <code>ARG-000002</code>, ...</li>
+            </ul>
+            <p>El número se <strong>autoincrementa</strong> con cada DNI creado.</p>
+
+            <h3>🛡️ Seguridad</h3>
+            <ul>
+                <li>🔐 Solo administradores con el rol configurado pueden firmar DNIs</li>
+                <li>💾 Base de datos local segura</li>
+                <li>📱 Códigos QR verificables</li>
+                <li>✅ Sistema de aprobación obligatorio</li>
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <h2>🎉 ¡Disfruta del Sistema de DNI!</h2>
+            <p>Este bot fue diseñado para hacer la gestión de documentos virtuales <strong>fácil</strong>, <strong>automática</strong> y <strong>profesional</strong>.</p>
+            
+            <hr style="margin: 30px 0; border-color: #ddd;">
+            
+            <p><strong>Versión:</strong> 2.0</p>
+            <p><strong>Desarrollado para:</strong> Servidores de roleplay y comunidades</p>
+            <p><strong>Soporte:</strong> Contacta a los administradores del servidor</p>
+            
+            <a href="#tabla-contenidos" class="star-button">⬆️ Volver arriba</a>
+        </footer>
+    </div>
+</body>
+</html>
