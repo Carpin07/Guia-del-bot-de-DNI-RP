@@ -1,422 +1,428 @@
-# 📄 Sistema de DNI Automatizado - Documentación Completa
+<div align="center">
 
-> Bot de Discord para gestionar Documentos Nacionales de Identidad virtuales con firma digital y base de datos persistente.
+# 📄 Sistema de DNI Automatizado
 
----
+### *Bot de Discord para gestionar Documentos Nacionales de Identidad virtuales*
 
-## 📑 Tabla de Contenidos
-
-1. [Instalación](#-instalación)
-2. [Configuración Inicial](#-configuración-inicial)
-3. [Comandos para Usuarios](#-comandos-para-usuarios)
-4. [Comandos para Administradores](#-comandos-para-administradores)
-5. [Sistema de Solicitudes Automáticas](#-sistema-de-solicitudes-automáticas)
-6. [Personalización de DNIs](#-personalización-de-dnis)
-7. [Preguntas Frecuentes](#-preguntas-frecuentes)
-8. [Solución de Problemas](#-solución-de-problemas)
+[![Discord](https://img.shields.io/badge/Discord-Bot-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com)
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 ---
 
-## 🚀 Instalación
+### ✨ Características Principales
 
-### Requisitos Previos
+🤖 **Automático** • 🎨 **Personalizable** • 💾 **Persistente** • ✅ **Firma Digital**
 
-- Python 3.8 o superior
-- Una cuenta de Discord Developer
-- Permisos de administrador en tu servidor
+</div>
 
-### Paso 1: Instalar Python
+---
 
-1. Descarga Python desde [python.org](https://www.python.org/downloads/)
-2. Durante la instalación, marca "Add Python to PATH"
-3. Verifica la instalación:
-   ```bash
-   python --version
-   ```
+## 📖 Tabla de Contenidos
 
-### Paso 2: Instalar Dependencias
+- [🎯 ¿Qué es este bot?](#-qué-es-este-bot)
+- [🚀 Comenzar](#-comenzar)
+- [👥 Para Usuarios](#-para-usuarios)
+  - [Solicitar DNI Automático](#-solicitar-dni-automático)
+  - [Ver Estadísticas](#-ver-estadísticas)
+- [👑 Para Administradores](#-para-administradores)
+  - [Crear DNI Manual](#-crear-dni-manual)
+  - [Firmar DNI](#-firmar-dni)
+  - [Configurar Canales](#-configurar-canales)
+- [🎨 Personalización](#-personalización)
+- [❓ Preguntas Frecuentes](#-preguntas-frecuentes)
 
-Abre PowerShell o Terminal y ejecuta:
+---
 
-```bash
-# Instalar librerías necesarias
-pip install discord.py
-pip install Pillow
-pip install qrcode[pil]
+## 🎯 ¿Qué es este bot?
+
+Este bot automatiza completamente la creación, firma y gestión de **Documentos Nacionales de Identidad** virtuales para servidores de Discord de roleplay.
+
+<div align="center">
+
+### 🌟 Características Destacadas
+
+| Característica | Descripción |
+|:-------------:|-------------|
+| 🤖 **Sistema Automático** | Los usuarios escriben un mensaje y el bot genera el DNI automáticamente |
+| 🎨 **3 Países Disponibles** | España 🇪🇸, México 🇲🇽, Argentina 🇦🇷 |
+| 🎭 **3 Temas de Diseño** | Clásico, Moderno, Oscuro |
+| ✅ **Firma Digital** | Los administradores aprueban con botones interactivos |
+| 💾 **Base de Datos** | Todos los DNIs se guardan permanentemente |
+| 📱 **Código QR** | Cada DNI incluye un QR verificable |
+| 📨 **Notificaciones DM** | El ciudadano recibe su DNI firmado por mensaje privado |
+
+</div>
+
+---
+
+## 🚀 Comenzar
+
+### Comandos Rápidos
+
 ```
-
-### Paso 3: Crear Bot en Discord
-
-1. Ve a [Discord Developer Portal](https://discord.com/developers/applications)
-2. Click en "New Application"
-3. Dale un nombre a tu bot
-4. Ve a la sección "Bot"
-5. Click en "Add Bot"
-6. **Copia el TOKEN** (lo necesitarás después)
-7. Activa estos **Privileged Gateway Intents**:
-   - ✅ Presence Intent
-   - ✅ Server Members Intent
-   - ✅ Message Content Intent
-
-### Paso 4: Invitar el Bot
-
-1. Ve a "OAuth2" → "URL Generator"
-2. Marca estos **Scopes**:
-   - ✅ bot
-   - ✅ applications.commands
-3. Marca estos **Bot Permissions**:
-   - ✅ Send Messages
-   - ✅ Embed Links
-   - ✅ Attach Files
-   - ✅ Read Message History
-   - ✅ Add Reactions
-   - ✅ Use Slash Commands
-4. Copia la URL generada y ábrela en tu navegador
-5. Selecciona tu servidor y autoriza
-
-### Paso 5: Configurar el Bot
-
-1. Descarga todos los archivos del bot
-2. Crea una carpeta llamada `fonts` dentro de la carpeta del bot
-3. Descarga la fuente **Inter** desde [Google Fonts](https://fonts.google.com/specimen/Inter)
-4. Extrae `Inter-Regular.ttf` y colócalo en la carpeta `fonts`
-5. Abre `index.py` y edita estas líneas:
-
-```python
-ADMIN_ROLE_ID = 1234567890  # <-- ID de tu rol de administrador
-BOT_TOKEN = "TU_TOKEN_AQUI"  # <-- Token del bot
-```
-
-**¿Cómo obtener el ID del rol?**
-1. En Discord, activa el Modo Desarrollador (Ajustes → Avanzado → Modo Desarrollador)
-2. Click derecho en el rol → Copiar ID
-
-### Paso 6: Ejecutar el Bot
-
-```bash
-# En la carpeta del bot
-python index.py
-```
-
-Si ves esto, ¡funciona! ✅
-```
-✅ Bot conectado como [Nombre del Bot]
-📊 DNIs en base de datos: 0
-⏳ DNIs pendientes: 0
+/ayuda_dni      → Ver guía completa
+/stats_dni      → Ver estadísticas del sistema
+/crear_dni      → Crear DNI manual (solo admins)
 ```
 
 ---
 
-## ⚙️ Configuración Inicial
+## 👥 Para Usuarios
 
-### 1. Configurar Canales del Sistema
+### 📝 Solicitar DNI Automático
 
-Ejecuta en Discord:
+El bot lee automáticamente mensajes en el canal de solicitudes. Solo copia y pega este formato:
 
-```
-/config_canales
-```
-
-**Parámetros:**
-- `canal_solicitudes` - Canal donde los usuarios enviarán solicitudes automáticas
-- `canal_firmados` - Canal donde se publicarán DNIs aprobados
-
-**Ejemplo:**
-```
-/config_canales canal_solicitudes:#solicitudes-dni canal_firmados:#dnis-oficiales
-```
-
-### 2. Verificar Configuración
-
-```
-/config_canales
-```
-
-Sin parámetros, muestra la configuración actual.
-
----
-
-## 👥 Comandos para Usuarios
-
-### Ver Ayuda
-
-```
-/ayuda_dni
-```
-
-Muestra una guía completa del sistema con todos los comandos disponibles.
-
-### Ver Estadísticas
-
-```
-/stats_dni
-```
-
-Muestra:
-- Total de DNIs creados
-- DNIs firmados y pendientes
-- Distribución por países
-- Información general del sistema
-
----
-
-## 👑 Comandos para Administradores
-
-### Crear DNI Manual
-
-```
-/crear_dni
-```
-
-**Parámetros opcionales:**
-- `pais` - Selecciona el país (España, México, Argentina)
-- `tema` - Selecciona el diseño (Clásico, Moderno, Oscuro)
-
-**Proceso:**
-1. Selecciona país y tema
-2. Se abre un formulario
-3. Completa:
-   - Edad
-   - Fecha de Nacimiento (dd/mm/yyyy)
-   - Usuario de Roblox
-4. Revisa el preview
-5. Confirma o cancela
-6. Si confirmas, se publica para firma
-
-**Ejemplo:**
-```
-/crear_dni pais:España tema:Moderno
-```
-
-### Firmar DNI
-
-Cuando se genera un DNI pendiente, aparecen dos botones:
-
-- **✅ Firmar y Aprobar** - Aprueba el DNI
-- **❌ Rechazar** - Rechaza la solicitud
-
-Al firmar:
-- Se publica en el canal de DNIs firmados (si está configurado)
-- Se envía por DM al ciudadano
-- Se guarda en la base de datos permanente
-
----
-
-## 🤖 Sistema de Solicitudes Automáticas
-
-### ¿Cómo funciona?
-
-Los usuarios pueden enviar solicitudes escribiendo un mensaje en el canal configurado con un formato específico. El bot lo detecta automáticamente y crea el DNI.
-
-### Formato de Solicitud
-
-En el canal de solicitudes, escribe:
-
-```
-DNI nuevo
-Edad: 25
-Fecha de Nacimiento: 15/03/1999
-Usuario de Roblox: Player123
-País: españa
-Tema: clasico
-```
-
-### Campos Requeridos
-
-✅ **Obligatorios:**
-- `Edad` - Número entre 0 y 150
-- `Fecha de Nacimiento` - Formato dd/mm/yyyy
-- `Usuario de Roblox` - Tu nombre de usuario en Roblox
-
-📋 **Opcionales:**
-- `País` - españa, mexico, argentina (por defecto: españa)
-- `Tema` - clasico, moderno, oscuro (por defecto: clasico)
-
-### Ejemplo Completo
+<div align="center">
 
 ```
 DNI nuevo
 Edad: 18
-Fecha de Nacimiento: 05/08/2006
-Usuario de Roblox: JuanGamer123
-País: mexico
-Tema: oscuro
+Fecha de Nacimiento: 15/03/2006
+Usuario de Roblox: TuUsuario123
+País: españa
+Tema: clasico
 ```
 
-### ¿Qué pasa después?
+</div>
 
-1. El bot detecta tu mensaje ✅
-2. Genera el DNI automáticamente 📄
-3. Lo publica para que los admins lo firmen 🖊️
-4. Añade ✅ a tu mensaje original ✔️
-5. Un admin firma el DNI 👑
-6. Recibes tu DNI firmado por DM 📨
+#### 📋 Campos Disponibles
 
-### Ventajas del Sistema Automático
+| Campo | Descripción | Obligatorio | Valores |
+|-------|-------------|:-----------:|---------|
+| **Edad** | Tu edad | ✅ | 0-150 |
+| **Fecha de Nacimiento** | Formato: dd/mm/yyyy | ✅ | Ej: 15/03/2006 |
+| **Usuario de Roblox** | Tu nombre en Roblox | ✅ | Cualquier texto |
+| **País** | País del DNI | ❌ | `españa`, `mexico`, `argentina` |
+| **Tema** | Diseño del DNI | ❌ | `clasico`, `moderno`, `oscuro` |
 
-- ⚡ **Rápido** - No necesitas usar comandos
-- 📝 **Simple** - Solo copias y pegas el formato
-- 🔄 **Automático** - El bot hace todo el trabajo
-- 💾 **Persistente** - Al reiniciar, procesa mensajes pendientes
+> 💡 **Nota:** Los campos País y Tema son opcionales. Por defecto se usa España y tema Clásico.
 
 ---
 
-## 🎨 Personalización de DNIs
+### 🔄 Proceso de Solicitud
 
-### Países Disponibles
+<div align="center">
 
-| País | Código | Bandera | Nacionalidad |
-|------|--------|---------|--------------|
-| España | `españa` | 🇪🇸 | Español/a |
-| México | `mexico` | 🇲🇽 | Mexicano/a |
-| Argentina | `argentina` | 🇦🇷 | Argentino/a |
+```mermaid
+graph LR
+    A[📝 Escribes solicitud] --> B[🤖 Bot detecta mensaje]
+    B --> C[📄 Genera DNI]
+    C --> D[✅ Añade reacción]
+    D --> E[👑 Admin firma]
+    E --> F[📨 Recibes DNI por DM]
+```
 
-### Temas Disponibles
+</div>
 
-| Tema | Descripción | Colores |
-|------|-------------|---------|
-| `clasico` | Diseño tradicional | Azul y blanco |
-| `moderno` | Diseño minimalista | Gris claro |
-| `oscuro` | Diseño dark mode | Negro y gris |
+1. **Escribes** tu solicitud en el canal configurado
+2. **El bot detecta** automáticamente tu mensaje
+3. **Se genera** el DNI con tus datos
+4. **Añade ✅** a tu mensaje (procesado)
+5. **Un admin firma** usando los botones
+6. **Recibes** tu DNI firmado por mensaje privado
 
-### Información en el DNI
+---
 
-Cada DNI incluye:
+### 📊 Ver Estadísticas
 
-- 👤 **Nombre completo** (nombre de Discord)
-- 🎂 **Edad**
-- 📅 **Fecha de nacimiento**
-- 💬 **Tag de Discord**
-- 🆔 **ID único** (formato: ESP-000001)
-- 🎮 **Usuario de Roblox**
-- 🌍 **País y nacionalidad**
-- 📆 **Fecha de ciudadanía**
-- ✓ **Estado** (Activo)
-- 📱 **Código QR** con información verificable
-- 🔐 **Sello oficial** (verde si firmado, rojo si pendiente)
-- ✍️ **Firma del administrador**
+Usa el comando `/stats_dni` para ver:
+
+- 📄 **Total de DNIs** creados
+- ✅ **DNIs firmados**
+- ⏳ **DNIs pendientes** de firma
+- 🌍 **Distribución por países**
+
+---
+
+## 👑 Para Administradores
+
+### 🛠️ Crear DNI Manual
+
+Si prefieres usar un formulario interactivo:
+
+```
+/crear_dni pais:España tema:Moderno
+```
+
+#### Pasos:
+
+1. Ejecuta el comando
+2. Selecciona **país** y **tema**
+3. Se abre un **formulario**
+4. Completa:
+   - Edad
+   - Fecha de Nacimiento
+   - Usuario de Roblox
+5. **Revisa el preview**
+6. **Confirma** o cancela
+
+---
+
+### ✅ Firmar DNI
+
+Cuando se genera un DNI pendiente, verás dos botones:
+
+<div align="center">
+
+| Botón | Acción |
+|:-----:|--------|
+| ✅ **Firmar y Aprobar** | Aprueba el DNI y lo publica |
+| ❌ **Rechazar** | Rechaza la solicitud |
+
+</div>
+
+#### Al firmar, automáticamente:
+
+- ✅ Se publica en el canal de DNIs firmados
+- 📨 Se envía por DM al ciudadano
+- 💾 Se guarda en la base de datos
+- 🗑️ Se elimina el mensaje pendiente
+
+---
+
+### ⚙️ Configurar Canales
+
+Configura dónde se leen solicitudes y dónde se publican DNIs firmados:
+
+```
+/config_canales canal_solicitudes:#solicitudes-dni canal_firmados:#dnis-oficiales
+```
+
+#### Ver configuración actual:
+
+```
+/config_canales
+```
+
+---
+
+## 🎨 Personalización
+
+### 🌍 Países Disponibles
+
+<div align="center">
+
+| Bandera | País | Código | Nacionalidad | Colores |
+|:-------:|------|:------:|:------------:|---------|
+| 🇪🇸 | **España** | `españa` | Español/a | Rojo y Amarillo |
+| 🇲🇽 | **México** | `mexico` | Mexicano/a | Verde, Blanco y Rojo |
+| 🇦🇷 | **Argentina** | `argentina` | Argentino/a | Celeste y Blanco |
+
+</div>
+
+---
+
+### 🎭 Temas de Diseño
+
+<div align="center">
+
+| Tema | Estilo | Colores | Ideal para |
+|:----:|--------|---------|------------|
+| **Clásico** | Tradicional | Azul y blanco | Servidores formales |
+| **Moderno** | Minimalista | Gris claro | Diseño contemporáneo |
+| **Oscuro** | Dark Mode | Negro y gris | Usuarios dark mode |
+
+</div>
+
+---
+
+### 📋 Información en el DNI
+
+Cada DNI generado incluye:
+
+<div align="center">
+
+| Elemento | Descripción |
+|----------|-------------|
+| 👤 **Nombre** | Nombre de Discord del usuario |
+| 🎂 **Edad** | Edad especificada |
+| 📅 **Fecha de Nacimiento** | En formato dd/mm/yyyy |
+| 💬 **Tag de Discord** | Mención del usuario |
+| 🆔 **ID Único** | Formato: ESP-000001 (autoincremental) |
+| 🎮 **Usuario Roblox** | Nombre en Roblox |
+| 🌍 **País y Nacionalidad** | Según el país seleccionado |
+| 📆 **Fecha de Ciudadanía** | Fecha de creación del DNI |
+| ✓ **Estado** | Activo (siempre) |
+| 📱 **Código QR** | Información verificable escaneada |
+| 🔐 **Sello Oficial** | Verde (firmado) o Rojo (pendiente) |
+| ✍️ **Firma** | Nombre del administrador que firmó |
+
+</div>
 
 ---
 
 ## ❓ Preguntas Frecuentes
 
-### ¿Puedo crear mi propio DNI?
+<details>
+<summary><b>¿Puedo crear mi propio DNI?</b></summary>
 
-No, solo los administradores pueden crear DNIs. Pero puedes solicitar uno usando el sistema automático en el canal de solicitudes.
+No directamente. Solo los administradores pueden crear DNIs manualmente con `/crear_dni`. Sin embargo, **puedes solicitar uno** usando el sistema automático escribiendo un mensaje con el formato especificado en el canal de solicitudes.
 
-### ¿Los DNIs se pierden si el bot se reinicia?
+</details>
 
-No, todos los DNIs se guardan en `dnis_database.json` y persisten entre reinicios.
+<details>
+<summary><b>¿Los DNIs se pierden si el bot se reinicia?</b></summary>
 
-### ¿Puedo cambiar mi DNI después de creado?
+**No**. Todos los DNIs se guardan en una base de datos JSON (`dnis_database.json`) que persiste entre reinicios del bot.
 
-No actualmente. Contacta a un administrador para crear uno nuevo.
+</details>
 
-### ¿Por qué no recibí mi DNI por DM?
+<details>
+<summary><b>¿Puedo cambiar mi DNI después de creado?</b></summary>
 
-Asegúrate de tener los mensajes privados activados desde miembros del servidor.
+Actualmente no hay sistema de edición. Contacta a un administrador para que cree uno nuevo con los datos correctos.
 
-### ¿Puedo tener DNIs de varios países?
+</details>
 
-Sí, puedes solicitar un DNI por cada país disponible.
+<details>
+<summary><b>¿Por qué no recibí mi DNI por mensaje privado?</b></summary>
 
-### ¿Los códigos QR son funcionales?
+Verifica que tengas activada la opción **"Permitir mensajes directos de miembros del servidor"** en la configuración de Privacidad de Discord para ese servidor.
 
-Sí, contienen información del DNI que puede ser escaneada.
+</details>
 
-### ¿Cómo sé si mi solicitud fue procesada?
+<details>
+<summary><b>¿Puedo tener DNIs de varios países?</b></summary>
 
-El bot añadirá una reacción ✅ a tu mensaje de solicitud.
+**Sí**. Puedes solicitar un DNI por cada país disponible (España, México, Argentina).
 
-### ¿Cuánto tarda en firmarse un DNI?
+</details>
 
-Depende de cuándo un administrador esté disponible para firmar.
+<details>
+<summary><b>¿Los códigos QR funcionan?</b></summary>
+
+**Sí**. Cada código QR contiene la información del DNI en texto plano y puede ser escaneado con cualquier lector de QR.
+
+</details>
+
+<details>
+<summary><b>¿Cómo sé si mi solicitud fue procesada?</b></summary>
+
+El bot añadirá automáticamente una reacción ✅ a tu mensaje de solicitud cuando la procese.
+
+</details>
+
+<details>
+<summary><b>¿Cuánto tarda en firmarse un DNI?</b></summary>
+
+Depende de la disponibilidad de los administradores. Una vez que un admin presione el botón de firma, el proceso es instantáneo.
+
+</details>
+
+<details>
+<summary><b>¿Qué pasa si escribo mal el formato?</b></summary>
+
+El bot simplemente no procesará tu mensaje. Asegúrate de:
+- Empezar con "DNI nuevo"
+- Usar dos puntos `:` después de cada campo
+- Seguir el formato exacto
+</details>
 
 ---
 
-## 🔧 Solución de Problemas
+## 💡 Ejemplos de Uso
 
-### El bot no responde a comandos
+### Ejemplo 1: Solicitud Básica (España)
 
-**Solución:**
-1. Verifica que el bot esté online (luz verde)
-2. Comprueba que tienes permisos
-3. Intenta `/ayuda_dni` para probar
-
-### Error: "Falta discord.py"
-
-**Solución:**
-```bash
-pip install discord.py
+```
+DNI nuevo
+Edad: 25
+Fecha de Nacimiento: 10/05/1999
+Usuario de Roblox: CarlosRP2024
 ```
 
-### Error: "No se encontró la fuente"
+### Ejemplo 2: Solicitud Completa (México, Tema Oscuro)
 
-**Solución:**
-1. Descarga Inter-Regular.ttf
-2. Colócala en la carpeta `fonts/`
-3. Reinicia el bot
-
-### El bot no detecta solicitudes automáticas
-
-**Solución:**
-1. Verifica que el canal esté configurado con `/config_canales`
-2. Asegúrate de que el mensaje empiece con "DNI nuevo"
-3. Verifica que el formato sea exacto (con dos puntos después de cada campo)
-
-### Error: "Solo los administradores pueden firmar DNIs"
-
-**Solución:**
-1. Verifica que tengas el rol configurado en `ADMIN_ROLE_ID`
-2. Pide a un administrador del servidor que te asigne el rol
-
-### El DNI no se envía por DM
-
-**Solución:**
-1. Activa "Permitir mensajes directos de miembros del servidor" en Privacidad
-2. Si no funciona, el DNI se publica en el canal configurado
-
-### Error al generar imagen
-
-**Solución:**
-```bash
-pip install --upgrade Pillow
+```
+DNI nuevo
+Edad: 19
+Fecha de Nacimiento: 22/11/2005
+Usuario de Roblox: MexicoPlayer99
+País: mexico
+Tema: oscuro
 ```
 
-### El bot se desconecta constantemente
+### Ejemplo 3: Argentina con Tema Moderno
 
-**Solución:**
-- Verifica tu conexión a internet
-- Comprueba que el token sea correcto
-- Revisa si hay errores en la consola
-
----
-
-## 📞 Soporte
-
-Si tienes problemas:
-
-1. Revisa esta documentación
-2. Verifica la sección de solución de problemas
-3. Consulta los logs en la consola
-4. Contacta al desarrollador del bot en tu servidor
+```
+DNI nuevo
+Edad: 30
+Fecha de Nacimiento: 03/07/1994
+Usuario de Roblox: ArgentinaGamer
+País: argentina
+Tema: moderno
+```
 
 ---
 
-## 📝 Notas Importantes
+## 🎯 Comandos Completos
 
-- ⚠️ **Nunca compartas tu token del bot** - Es como tu contraseña
-- 🔄 **Haz backups** del archivo `dnis_database.json` regularmente
-- 📊 **Monitorea el uso** con `/stats_dni`
-- 🔐 **Solo admins de confianza** deben tener el rol configurado
-- 💾 **El archivo de base de datos** crece con cada DNI
+<div align="center">
+
+| Comando | Quién puede usarlo | Descripción |
+|---------|-------------------|-------------|
+| `/ayuda_dni` | 👥 Todos | Muestra guía completa del sistema |
+| `/stats_dni` | 👥 Todos | Ver estadísticas de DNIs |
+| `/crear_dni` | 👑 Solo Admins | Crear DNI con formulario |
+| `/config_canales` | 👑 Solo Admins | Configurar canales del sistema |
+
+</div>
 
 ---
+
+## 🔔 Notificaciones
+
+### Para Usuarios:
+
+- 📨 **DM al aprobar**: Recibes tu DNI firmado por mensaje privado
+- ✅ **Reacción**: El bot marca tu solicitud con ✅
+
+### Para Administradores:
+
+- 🔔 **Mensaje en canal**: Aparece DNI pendiente con botones
+- 📢 **Publicación automática**: DNIs firmados se publican en el canal configurado
+
+---
+
+## 📊 Sistema de IDs
+
+Cada DNI tiene un **ID único** que nunca se repite:
+
+- 🇪🇸 España: `ESP-000001`, `ESP-000002`, ...
+- 🇲🇽 México: `MEX-000001`, `MEX-000002`, ...
+- 🇦🇷 Argentina: `ARG-000001`, `ARG-000002`, ...
+
+El número se **autoincrementa** con cada DNI creado.
+
+---
+
+## 🛡️ Seguridad
+
+- 🔐 Solo administradores con el rol configurado pueden firmar DNIs
+- 💾 Base de datos local segura
+- 📱 Códigos QR verificables
+- ✅ Sistema de aprobación obligatorio
+
+---
+
+<div align="center">
 
 ## 🎉 ¡Disfruta del Sistema de DNI!
 
-Este bot fue diseñado para hacer la gestión de documentos virtuales fácil y automática. Si tienes sugerencias o encuentras bugs, contacta a tu administrador.
+Este bot fue diseñado para hacer la gestión de documentos virtuales **fácil**, **automática** y **profesional**.
+
+---
 
 **Versión:** 2.0  
-**Última actualización:** 2025  
-**Desarrollado para:** Servidores de roleplay y comunidades
+**Desarrollado para:** Servidores de roleplay y comunidades  
+**Soporte:** Contacta a los administradores del servidor
+
+---
+
+### 🌟 Si te gusta este bot, ¡dale una estrella en GitHub!
+
+[![GitHub stars](https://img.shields.io/github/stars/tuusuario/sistema-dni-bot?style=social)](https://github.com/tuusuario/sistema-dni-bot)
+
+</div>
